@@ -1,0 +1,548 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Mobile-first breakpoints */
+  --screen-xs: 320px;
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1536px;
+  
+  /* Touch-friendly sizing */
+  --touch-target: 44px;
+  --thumb-space: 16px;
+  --swipe-threshold: 50px;
+}
+
+/* Maritime Color Palette */
+:root {
+  --radius: 0.5rem;
+  
+  /* Primary Navy Theme */
+  --background: 210 40% 98%; /* Light blue-gray background */
+  --foreground: 222 84% 20%; /* Deep navy for text */
+  --card: 0 0% 100%; /* Pure white cards */
+  --card-foreground: 222 84% 20%; /* Navy text on cards */
+  --popover: 0 0% 100%; /* White popover background */
+  --popover-foreground: 222 84% 20%; /* Navy text on popovers */
+  
+  /* Navy Primary Colors */
+  --primary: 215 25% 25%; /* Navy blue primary */
+  --primary-foreground: 0 0% 98%; /* Light text on navy */
+  
+  /* Ocean Secondary Colors */
+  --secondary: 210 40% 95%; /* Light blue-gray secondary */
+  --secondary-foreground: 222 84% 20%; /* Navy text on secondary */
+  
+  /* Muted Colors */
+  --muted: 210 16% 93%; /* Very light blue-gray */
+  --muted-foreground: 215 16% 47%; /* Medium blue-gray for muted text */
+  
+  /* Accent Gold/Amber Colors */
+  --accent: 43 96% 85%; /* Light amber/gold */
+  --accent-foreground: 222 84% 20%; /* Navy text on gold */
+  
+  /* State Colors */
+  --destructive: 0 84% 60%; /* Maritime red for errors */
+  --border: 210 16% 93%; /* Light borders */
+  --input: 210 16% 93%; /* Input backgrounds */
+  --ring: 215 25% 25%; /* Focus rings match primary */
+  
+  /* Chart Colors for Data Visualization */
+  --chart-1: 215 25% 25%; /* Navy */
+  --chart-2: 197 71% 52%; /* Ocean blue */
+  --chart-3: 204 66% 45%; /* Deep blue */
+  --chart-4: 43 96% 70%; /* Gold */
+  --chart-5: 142 76% 50%; /* Success green */
+  
+  /* Sidebar Colors */
+  --sidebar: 215 25% 15%; /* Dark navy sidebar */
+  --sidebar-foreground: 0 0% 98%; /* Light text */
+  --sidebar-primary: 43 96% 70%; /* Gold primary in sidebar */
+  --sidebar-primary-foreground: 222 84% 20%; /* Navy text on gold */
+  --sidebar-accent: 215 25% 25%; /* Navy accent */
+  --sidebar-accent-foreground: 0 0% 98%; /* Light accent text */
+  --sidebar-border: 210 16% 20%; /* Darker borders */
+  --sidebar-ring: 43 96% 70%; /* Gold rings */
+  
+  /* Mobile-first Typography Scale */
+  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);    /* 12-14px */
+  --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);     /* 14-16px */
+  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);      /* 16-18px */
+  --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);    /* 18-20px */
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);     /* 20-24px */
+  --font-size-2xl: clamp(1.5rem, 1.3rem  + 1vw, 1.875rem);     /* 24-30px */
+  --font-size-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.25rem);   /* 30-36px */
+  --font-size-4xl: clamp(2.25rem, 1.8rem + 2vw, 3rem);         /* 36-48px */
+  --font-size-5xl: clamp(3rem, 2rem + 5vw, 5rem);             /* 48-80px */
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+  
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+}
+
+/* Dark Mode - Maritime Night Theme */
+.dark {
+  /* Primary Navy Theme - Dark */
+  --background: 222 84% 4%; /* Very dark navy background */
+  --foreground: 210 40% 98%; /* Light blue-gray text */
+  --card: 215 25% 8%; /* Navy cards */
+  --card-foreground: 210 40% 90%; /* Light text on navy cards */
+  --popover: 215 25% 8%; /* Navy popover */
+  --popover-foreground: 210 40% 98%; /* Light text on popover */
+  
+  /* Navy Primary Colors - Dark */
+  --primary: 43 96% 70%; /* Gold primary in dark mode */
+  --primary-foreground: 222 84% 20%; /* Navy text on gold */
+  
+  /* Ocean Secondary Colors - Dark */
+  --secondary: 215 25% 15%; /* Dark navy secondary */
+  --secondary-foreground: 210 40% 98%; /* Light text on secondary */
+  
+  /* Muted Colors - Dark */
+  --muted: 215 25% 12%; /* Very dark navy */
+  --muted-foreground: 215 16% 60%; /* Medium blue-gray */
+  
+  /* Accent Gold Colors - Dark */
+  --accent: 43 96% 75%; /* Slightly lighter gold */
+  --accent-foreground: 222 84% 20%; /* Navy text */
+  
+  /* State Colors - Dark */
+  --destructive: 0 84% 65%; /* Slightly lighter red */
+  --border: 215 25% 15%; /* Dark navy borders */
+  --input: 215 25% 12%; /* Dark navy inputs */
+  --ring: 43 96% 70%; /* Gold focus rings */
+  
+  /* Chart Colors - Dark Mode */
+  --chart-1: 43 96% 70%; /* Gold */
+  --chart-2: 197 71% 52%; /* Ocean blue */
+  --chart-3: 215 25% 60%; /* Lighter navy */
+  --chart-4: 142 76% 50%; /* Success green */
+  --chart-5: 204 66% 60%; /* Lighter blue */
+  
+  /* Sidebar Colors - Dark */
+  --sidebar: 215 25% 8%; /* Very dark navy */
+  --sidebar-foreground: 210 40% 90%; /* Light text */
+  --sidebar-primary: 43 96% 70%; /* Gold */
+  --sidebar-primary-foreground: 222 84% 20%; /* Navy on gold */
+  --sidebar-accent: 215 25% 15%; /* Dark navy accent */
+  --sidebar-accent-foreground: 210 40% 90%; /* Light accent text */
+  --sidebar-border: 215 25% 15%; /* Dark borders */
+  --sidebar-ring: 43 96% 70%; /* Gold rings */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  /* Mobile-first responsive root styles */
+  html {
+    /* Prevent zoom on input focus - iOS Safari */
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    
+    /* Mobile-specific enhancements */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior: none;
+    
+    /* Smooth scrolling on supported devices */
+    scroll-behavior: smooth;
+    
+    /* Safe area support */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Touch-friendly tap targets - minimum 44px */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"],
+  input[type="radio"],
+  input[type="checkbox"],
+  select,
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+    
+    /* Prevent tap highlights */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    
+    /* Smooth transitions for better touch feedback */
+    transition: all 0.2s ease;
+  }
+  
+  /* Mobile-optimized input styles */
+  input,
+  textarea,
+  select {
+    /* Prevent zoom on focus for iOS Safari */
+    font-size: 16px;
+    
+    /* Better touch experience */
+    -webkit-appearance: none;
+    border-radius: 0;
+    
+    /* Ensure comfortable touch targets */
+    min-height: var(--touch-target);
+  }
+  
+  /* Remove spinner arrows on number inputs */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Mobile-optimized scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+  
+  /* Mobile-specific pseudo-classes */
+  @media (pointer: coarse) {
+    /* Reduce hover effects on touch devices */
+    .hover\:bg-accent:hover {
+      background-color: transparent;
+    }
+    
+    .hover\:shadow-lg:hover {
+      box-shadow: inherit;
+    }
+    
+    /* Better touch feedback */
+    button:active,
+    .clickable:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+  }
+  
+  /* Focus styles optimized for mobile */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  
+  /* Prevent text selection on mobile interactive elements */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Mobile navigation improvements */
+  .nav-link {
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-link:active {
+    transform: scale(0.98);
+  }
+  
+  /* Thumb-friendly spacing */
+  .thumb-space {
+    padding: var(--thumb-space);
+  }
+  
+  /* Mobile cards with better touch targets */
+  .touch-card {
+    padding: var(--thumb-space);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .touch-card:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Mobile typography */
+  h1, .h1 {
+    @apply text-4xl font-bold leading-tight tracking-tight;
+    font-size: var(--font-size-4xl);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    margin-bottom: 1.5rem;
+  }
+  
+  h2, .h2 {
+    @apply text-3xl font-semibold leading-tight tracking-tight;
+    font-size: var(--font-size-3xl);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    margin-bottom: 1.25rem;
+  }
+  
+  h3, .h3 {
+    @apply text-2xl font-semibold leading-snug tracking-normal;
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-snug);
+    letter-spacing: var(--letter-spacing-normal);
+    margin-bottom: 1rem;
+  }
+  
+  h4, .h4 {
+    @apply text-xl font-semibold leading-snug tracking-normal;
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-snug);
+    letter-spacing: var(--letter-spacing-normal);
+    margin-bottom: 0.75rem;
+  }
+  
+  h5, .h5 {
+    @apply text-lg font-medium leading-normal tracking-normal;
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-tight);
+    margin-bottom: 0.5rem;
+  }
+  
+  h6, .h6 {
+    @apply text-base font-medium leading-normal tracking-wide;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--letter-spacing-wide);
+    margin-bottom: 0.5rem;
+  }
+  
+  p, .text-body {
+    @apply text-base leading-relaxed;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: 1rem;
+  }
+  
+  /* Mobile-first responsive utilities */
+  .text-responsive-sm {
+    font-size: var(--font-size-sm);
+  }
+  
+  .text-responsive-base {
+    font-size: var(--font-size-base);
+  }
+  
+  .text-responsive-lg {
+    font-size: var(--font-size-lg);
+  }
+  
+  .text-responsive-xl {
+    font-size: var(--font-size-xl);
+  }
+  
+  /* Maritime-specific utility classes */
+  .maritime-primary {
+    @apply text-primary bg-primary-foreground;
+  }
+  
+  .maritime-secondary {
+    @apply text-secondary-foreground bg-secondary;
+  }
+  
+  .maritime-accent {
+    @apply text-accent-foreground bg-accent;
+  }
+  
+  .maritime-success {
+    @apply text-white bg-chart-5;
+  }
+  
+  .maritime-warning {
+    @apply text-primary-foreground bg-chart-4;
+  }
+  
+  .maritime-error {
+    @apply text-white bg-destructive;
+  }
+  
+  /* Mobile-optimized spacing scale */
+  .space-mobile-xs { margin: 0.5rem; }
+  .space-mobile-sm { margin: 0.75rem; }
+  .space-mobile-md { margin: 1rem; }
+  .space-mobile-lg { margin: 1.5rem; }
+  .space-mobile-xl { margin: 2rem; }
+  .space-mobile-2xl { margin: 3rem; }
+  
+  /* Enhanced shadows for mobile */
+  .shadow-maritime {
+    box-shadow: 0 1px 3px 0 rgb(30 41 59 / 10%), 0 1px 2px 0 rgb(30 41 59 / 6%);
+  }
+  
+  .shadow-maritime-lg {
+    box-shadow: 0 4px 6px -1px rgb(30 41 59 / 10%), 0 2px 4px -1px rgb(30 41 59 / 6%);
+  }
+  
+  .shadow-maritime-xl {
+    box-shadow: 0 10px 15px -3px rgb(30 41 59 / 10%), 0 4px 6px -2px rgb(30 41 59 / 5%);
+  }
+  
+  /* Mobile-specific utilities */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+   padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Mobile gesture feedback */
+  .gesture-active {
+    transform: scale(0.98);
+    opacity: 0.8;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+  }
+  
+  /* Mobile-specific animations */
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+}
+
+/* Mobile-first responsive breakpoints */
+@media (min-width: 320px) {
+  .mobile\:hidden { display: none !important; }
+  .mobile\:block { display: block !important; }
+  .mobile\:flex { display: flex !important; }
+}
+
+@media (min-width: 640px) {
+  .sm\:mobile\:hidden { display: none !important; }
+  .sm\:mobile\:block { display: block !important; }
+}
+
+@media (min-width: 768px) {
+  .md\:mobile\:hidden { display: none !important; }
+  .md\:mobile\:block { display: block !important; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:mobile\:hidden { display: none !important; }
+  .lg\:mobile\:block { display: block !important; }
+}
