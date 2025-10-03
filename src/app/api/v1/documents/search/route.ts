@@ -63,3 +63,6 @@ const searchHandler = createApiHandler(searchDocumentsHandler, {
 });
 
 export { searchHandler as GET };
+
+
+

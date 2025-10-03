@@ -198,3 +198,6 @@ COMMENT ON TRIGGER create_signoff_checklist_on_assignment_insert ON assignments 
 -- =============================================================================
 -- END OF MIGRATION
 -- =============================================================================
+
+
+

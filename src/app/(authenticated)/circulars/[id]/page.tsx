@@ -38,3 +38,6 @@ export default function CircularDetailPage({ params }: CircularDetailPageProps) 
     </div>
   );
 }
+
+
+

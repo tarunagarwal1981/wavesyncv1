@@ -133,3 +133,5 @@ export interface DashboardData {
   recentCertificates: Certificate[];
   recentTickets: Ticket[];
 }
+
+

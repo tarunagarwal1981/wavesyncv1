@@ -179,3 +179,5 @@ export const MARITIME_SHADOWS = {
   'maritime-lg': '0 10px 15px -3px rgb(30 41 59 / 10%), 0 4px 6px -2px rgb(30 41 59 / 5%)',
   'maritime-xl': '0 20px 25px -5px rgb(30 41 59 / 10%), 0 10px 10px -5px rgb(30 41 59 / 4%)',
 } as const;
+
+

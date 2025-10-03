@@ -201,3 +201,6 @@ const forecastWeatherHandler = createApiHandler(getWeatherForecastHandler, {
 
 export { currentWeatherHandler as GET };
 export { forecastWeatherHandler as POST }; // Use POST for forecast with body params
+
+
+

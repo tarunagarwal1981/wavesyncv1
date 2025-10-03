@@ -96,3 +96,6 @@ export function CircularCard({ circular }: CircularCardProps) {
     </Link>
   );
 }
+
+
+

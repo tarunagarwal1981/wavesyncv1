@@ -52,8 +52,8 @@ export const MAIN_NAVIGATION: NavigationGroup = {
     {
       id: 'documents',
       label: 'Documents',
-      href: '/documents',
-      icon: Folder,
+      href: '/dashboard/documents',
+      icon: FolderOpen,
     },
     {
       id: 'notifications',
@@ -66,12 +66,6 @@ export const MAIN_NAVIGATION: NavigationGroup = {
       label: 'Sign-off',
       href: '/signoff',
       icon: CheckSquare,
-    },
-    {
-      id: 'documents',
-      label: 'Documents',
-      href: '/dashboard/documents',
-      icon: FolderOpen,
     },
   ],
 };

@@ -191,3 +191,6 @@ export function TravelChecklist({ ticket, className }: TravelChecklistProps) {
     </Card>
   );
 }
+
+
+

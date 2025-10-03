@@ -155,3 +155,6 @@ function parseForecast(forecastList: any[]): Array<{
     };
   }).slice(0, 5); // Limit to 5 days
 }
+
+
+

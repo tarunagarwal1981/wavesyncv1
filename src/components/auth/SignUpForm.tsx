@@ -73,6 +73,8 @@ export function SignUpForm({ onLoginClick }: SignUpFormProps) {
     setSubmitError('');
 
     try {
+      console.log('Form submission started');
+      
       // Only include emergency contact if it's provided
       const submissionData = { ...formData };
       if (!includeEmergencyContact) {
@@ -81,29 +83,43 @@ export function SignUpForm({ onLoginClick }: SignUpFormProps) {
         submissionData.emergencyContactRelationship = '';
       }
 
+      console.log('Form data:', submissionData);
+
       // Validate entire form
       const validatedData = signUpSchema.parse(submissionData);
+      console.log('Validation passed');
       
       const result = await signUp(validatedData);
+      console.log('Sign up result:', result);
 
       if (result.success) {
+        console.log('Success - redirecting to login');
         // Redirect to login with success message
         router.push('/auth/login?message=Account created successfully. Please sign in.');
       } else {
+        console.log('Sign up failed:', result.error);
         setSubmitError(result.error || 'Sign up failed');
       }
     } catch (error) {
+      console.error('Form submission error:', error);
+      
       if (error instanceof Error && 'errors' in error) {
         // Zod validation errors
+        console.log('Validation error caught');
         const zodError = error as any;
         const fieldErrors: Partial<SignUpFormData> = {};
         
         zodError.errors.forEach((err: any) => {
+          console.log('Validation error:', err.path, err.message);
           fieldErrors[err.path[0] as keyof SignUpFormData] = err.message;
         });
         
         setErrors(fieldErrors);
+      } else if (error instanceof Error) {
+        console.error('Unexpected error:', error);
+        setSubmitError(error.message);
       } else {
+        console.error('Unknown error:', error);
         setSubmitError('An unexpected error occurred');
       }
     } finally {

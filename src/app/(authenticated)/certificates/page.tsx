@@ -279,3 +279,5 @@ export const metadata = {
   title: 'Certificates | WaveSync - Maritime Operations',
   description: 'Manage your professional maritime certifications, track expiry dates, and ensure compliance.',
 };
+
+

@@ -61,3 +61,5 @@ export interface NavigationConfig {
   collapsed: boolean;
   sticky: boolean;
 }
+
+

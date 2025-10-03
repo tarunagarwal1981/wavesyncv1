@@ -301,3 +301,5 @@ src/
 - [Next Themes](https://github.com/pacocoursey/next-themes)
 
 The maritime theme is now fully configured and ready for professional maritime applications!
+
+

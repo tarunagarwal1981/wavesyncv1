@@ -143,3 +143,6 @@ const deleteHandler = createApiHandler(deleteDocumentHandler, {
 });
 
 export { getHandler as GET, putHandler as PUT, deleteHandler as DELETE };
+
+
+

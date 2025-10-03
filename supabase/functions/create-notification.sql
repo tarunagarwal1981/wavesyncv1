@@ -245,3 +245,6 @@ $$;
 GRANT EXECUTE ON FUNCTION create_notification TO authenticated;
 GRANT EXECUTE ON FUNCTION create_bulk_notifications TO authenticated;
 GRANT EXECUTE ON FUNCTION create_notification_from_template TO authenticated;
+
+
+

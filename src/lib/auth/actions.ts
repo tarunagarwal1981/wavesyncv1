@@ -99,6 +99,9 @@ export async function signUp({
   emergencyContactRelationship,
 }: SignUpData): Promise<AuthResult> {
   try {
+    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log('Supabase Anon Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.substring(0, 20) + '...');
+    
     const supabase = await createClient();
 
     // Validate passwords match
@@ -146,7 +149,52 @@ export async function signUp({
       };
     }
 
-    // Create user profile
+    console.log('Auth user created:', authData.user.id, authData.user.email);
+    
+    // Verify user was actually created in auth.users table
+    const { createClient: createAdminClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createAdminClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    );
+
+    // Check if user exists in auth.users table
+    let userExists = false;
+    for (let checkAttempt = 1; checkAttempt <= 5; checkAttempt++) {
+      const { data: userInDb, error: userCheckError } = await supabaseAdmin
+        .from('auth.users')
+        .select('id')
+        .eq('id', authData.user.id)
+        .single();
+
+      if (!userCheckError && userInDb) {
+        userExists = true;
+        console.log(`User confirmed in auth.users on attempt ${checkAttempt}`);
+        break;
+      }
+      
+      console.log(`User check attempt ${checkAttempt}: User not in auth.users yet`);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    if (!userExists) {
+      console.error('User never appeared in auth.users table');
+      return {
+        success: false,
+        error: 'Sign up failed',
+        errorDetails: 'User was not properly created',
+      };
+    }
+
+    console.log('✅ User confirmed in auth.users, starting profile creation...');
+    
+    // Create user profile using service role key to bypass RLS
     const emergencyContact = emergencyContactName && emergencyContactPhone
       ? {
           name: emergencyContactName,
@@ -155,19 +203,62 @@ export async function signUp({
         }
       : null;
 
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .insert({
-        id: authData.user.id,
-        employee_id: employeeId.trim(),
-        rank: rank.trim(),
-        nationality: nationality.trim(),
-        phone: phone?.trim() || null,
-        emergency_contact: emergencyContact,
-      });
+    console.log('📝 Creating profile with data:', {
+      id: authData.user.id,
+      email: email.trim().toLowerCase(),
+      employee_id: employeeId.trim(),
+      rank: rank.trim(),
+      nationality: nationality.trim()
+    });
+
+    // Retry profile creation with multiple attempts
+    let profileError: any = null;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      console.log(`🔄 Profile creation attempt ${attempt}/3...`);
+      
+      const { error } = await supabaseAdmin
+        .from('profiles')
+        .insert({
+          id: authData.user.id,
+          first_name: '', // Will be collected later via profile update
+          last_name: '',
+          email: email.trim().toLowerCase(),
+          role: 'seafarer',
+          employee_id: employeeId.trim(),
+          rank: rank.trim(),  
+          nationality: nationality.trim(),
+          phone: phone?.trim() || null,
+          emergency_contact_name: emergencyContact?.name || null,
+          emergency_contact_phone: emergencyContact?.phone || null,
+          emergency_contact_relationship: emergencyContact?.relationship || null,
+        });
+
+      if (!error) {
+        console.log(`✅ Profile created successfully on attempt ${attempt}!`);
+        break; // Success!
+      }
+
+      profileError = error;
+      console.error(`❌ Profile creation attempt ${attempt} failed:`, error);
+      
+      if (error.code === '23503') {
+        // Foreign key constraint - user not ready yet, wait and retry
+        console.log(`🕐 User not ready (foreign key constraint), retrying in 2s...`);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } else {
+        // Other error, don't retry
+        break;
+      }
+    }
 
     if (profileError) {
-      console.error('Profile creation error:', profileError);
+      console.error('🚨 CRITICAL: Profile creation failed after all retry attempts!');
+      console.error('Profile error details:', {
+        code: profileError.code,
+        message: profileError.message,
+        details: profileError.details,
+        hint: profileError.hint
+      });
       return {
         success: false,
         error: 'Account created but profile setup failed',
@@ -175,6 +266,7 @@ export async function signUp({
       };
     }
 
+    console.log('🎉 SUCCESS: Both user and profile created successfully!');
     return { success: true };
   } catch (error) {
     console.error('Sign up error:', error);
@@ -366,3 +458,5 @@ function getSignUpErrorMessage(error: AuthError): string {
       return 'Sign up failed. Please try again';
   }
 }
+
+

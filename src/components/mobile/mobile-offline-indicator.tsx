@@ -79,7 +79,7 @@ export function MobileOfflineIndicator() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -106,3 +106,6 @@ export function MiniOfflineIndicator({
     </div>
   );
 }
+
+
+

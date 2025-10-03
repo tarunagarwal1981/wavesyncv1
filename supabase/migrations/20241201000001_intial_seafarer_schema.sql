@@ -449,3 +449,5 @@ insert into ports (port_name, country, unlocode, timezone, latitude, longitude) 
 ('Dubai Port', 'United Arab Emirates', 'AEDUB', 'Asia/Dubai', 25.2612, 55.2759);
 
 comment on table assignments is 'Seafarer vessel assignments with contract periods and signoff tracking';
+
+

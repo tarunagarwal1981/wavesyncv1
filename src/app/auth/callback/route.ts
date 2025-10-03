@@ -35,3 +35,5 @@ export async function GET(request: NextRequest) {
   // If no code or failed to create session, redirect to login
   return NextResponse.redirect(new URL('/auth/login', request.url));
 }
+
+

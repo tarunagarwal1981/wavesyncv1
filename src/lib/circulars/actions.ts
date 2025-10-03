@@ -135,3 +135,6 @@ export async function downloadAttachment(attachmentUrl: string, filename: string
   // Log download activity (could add to a downloads audit table)
   // For now, just ensure user is authenticated
 }
+
+
+

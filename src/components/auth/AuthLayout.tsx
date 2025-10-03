@@ -147,6 +147,7 @@ export function AuthButton({
 
 interface AuthInputProps {
   type?: string;
+  name?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -159,6 +160,7 @@ interface AuthInputProps {
 
 export function AuthInput({
   type = 'text',
+  name,
   placeholder,
   value,
   onChange,
@@ -171,6 +173,7 @@ export function AuthInput({
   return (
     <input
       type={type}
+      name={name}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
@@ -220,3 +223,5 @@ export function AuthLink({ href, children, className = '' }: AuthLinkProps) {
     </Link>
   );
 }
+
+

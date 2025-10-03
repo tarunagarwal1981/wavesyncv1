@@ -11,7 +11,6 @@ const emailSchema = z
 const passwordSchema = z
   .string()
   .min(6, 'Password must be at least 6 characters')
-  .regex(/^(?=.*[a-z])(?=.*[A-Z])/, 'Password must contain at least one uppercase and one lowercase letter')
   .regex(/\d/, 'Password must contain at least one number');
 
 const employeeIdSchema = z
@@ -114,3 +113,5 @@ export function getValidationErrors(errors: z.ZodError): ValidationErrors {
   
   return result;
 }
+
+

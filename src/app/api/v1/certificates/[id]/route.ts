@@ -153,3 +153,6 @@ const deleteHandler = createApiHandler(deleteCertificateHandler, {
 });
 
 export { getHandler as GET, putHandler as PUT, deleteHandler as DELETE };
+
+
+

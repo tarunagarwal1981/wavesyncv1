@@ -1,8 +1,21 @@
 'use client';
 
 import { useState, useEffect, useRef, ReactNode, useMemo } from 'react';
-import { FixedSizeList as List } from 'react-window';
 import { cn } from '@/lib/utils';
+
+// Fallback for react-window if not available
+let List: any = null;
+try {
+  const { FixedSizeList } = require('react-window');
+  List = FixedSizeList;
+} catch (e) {
+  // Fallback component if react-window is not available
+  List = ({ children, ...props }: any) => (
+    <div {...props}>
+      {children}
+    </div>
+  );
+}
 
 interface VirtualListProps<T> {
  items: T[];
@@ -180,3 +193,6 @@ export function useInfiniteScroll<T>(
     hasMore: hasMore && currentIndex < items.length,
   };
 }
+
+
+

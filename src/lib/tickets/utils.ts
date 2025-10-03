@@ -381,3 +381,6 @@ export function generateAirportSummary(airportCode: string): AirportInfo {
     timezone: 'UTC',
   };
 }
+
+
+

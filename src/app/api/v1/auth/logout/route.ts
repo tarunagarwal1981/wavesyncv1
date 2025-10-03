@@ -33,3 +33,6 @@ const handler = createApiHandler(logoutHandler, {
 });
 
 export { handler as POST };
+
+
+

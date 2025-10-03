@@ -146,3 +146,5 @@ insert into notifications (
 comment on table signoff_checklist_items is 'Individual checklist items for systematic vessel signoff process';
 
 -- End of seed data migration
+
+

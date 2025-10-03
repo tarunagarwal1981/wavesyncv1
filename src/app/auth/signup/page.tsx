@@ -5,23 +5,27 @@ import { SignUpForm } from '@/components/auth/SignUpForm';
 export default async function SignUpPage({
   searchParams,
 }: {
-  searchParams: { message?: string; error?: string };
+  searchParams: Promise<{ message?: string; error?: string }>;
 }) {
   // Redirect if already authenticated
   await redirectIfAuthenticated();
 
+  const params = await searchParams;
+
   return (
     <AuthLayout
       title="Create Your Account"
-      subtitle={searchParams.message || "Join WaveSync to manage your maritime career"}
+      subtitle={params.message || "Join WaveSync to manage your maritime career"}
     >
       <SignUpForm />
       
-      {searchParams.error && (
+      {params.error && (
         <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md text-red-800 text-sm">
-          {searchParams.error}
+          {params.error}
         </div>
       )}
     </AuthLayout>
   );
 }
+
+

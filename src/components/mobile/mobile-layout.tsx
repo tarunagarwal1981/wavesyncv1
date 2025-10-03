@@ -7,6 +7,7 @@ import { MobileNav } from './mobile-nav';
 import { MobileOfflineIndicator } from './mobile-offline-indicator';
 import { useOnline } from '@/hooks/mobile/useOnline';
 import { useBreakpoint } from '@/hooks/mobile/useViewport';
+import { cn } from '@/lib/utils';
 
 interface MobileLayoutProps {
   children: ReactNode;
@@ -197,3 +198,6 @@ export function MobileGrid({
     </div>
   );
 }
+
+
+

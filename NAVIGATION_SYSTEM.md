@@ -410,3 +410,5 @@ useEffect(() => {
 - **Privacy by design**: Minimal data collection in navigation
 
 The navigation system provides a professional, maritime-focused experience that scales beautifully across all devices while maintaining security and accessibility standards.
+
+

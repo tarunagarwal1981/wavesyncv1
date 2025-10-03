@@ -46,3 +46,5 @@ export function LogoutButton({ onClick, className = '', variant = 'secondary' }:
     </AuthButton>
   );
 }
+
+

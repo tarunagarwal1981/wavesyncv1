@@ -17,3 +17,6 @@ export default function DocumentDetailPage({ params }: DocumentDetailPageProps) 
     </div>
   );
 }
+
+
+

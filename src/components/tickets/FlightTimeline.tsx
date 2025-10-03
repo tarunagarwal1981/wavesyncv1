@@ -294,3 +294,6 @@ function calculateTotalTime(segments: FlightSegment[]): number {
     return total + segment.duration + (segment.layover?.duration || 0);
   }, 0);
 }
+
+
+

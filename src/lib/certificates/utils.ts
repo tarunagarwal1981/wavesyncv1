@@ -302,3 +302,5 @@ export function validateCertificate(certificate: Partial<Certificate>): string[]
   
   return errors;
 }
+
+
