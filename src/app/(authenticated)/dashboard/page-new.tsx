@@ -179,13 +179,33 @@ async function DashboardContent() {
 // Main Dashboard Page
 export default async function DashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-center space-y-4 p-6">
-        <div className="h-8 w-32 bg-muted rounded animate-pulse mx-auto" />
-        <div className="h-4 w-48 bg-muted rounded animate-pulse mx-auto" />
-      </div>
-    </div>}>
+    <Suspense fallback={<DashboardSkeleton />}>
       <DashboardContent />
     </Suspense>
+  );
+}
+
+// Mobile-optimized loading fallback
+function DashboardSkeleton() {
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6 space-y-6">
+        {/* Header skeleton */}
+        <div className="h-16 bg-muted rounded animate-pulse" />
+        
+        {/* Content skeleton */}
+        <div className="space-y-4">
+          <div className="h-32 bg-muted rounded animate-pulse" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="p-4 border rounded-lg space-y-2">
+                <div className="h-8 w-12 bg-muted rounded animate-pulse" />
+                <div className="h-4 w-16 bg-muted rounded animate-pulse" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -44,11 +44,13 @@ export function MobileLayout({
       {/* Offline indicator */}
       <MobileOfflineIndicator />
 
-      {/* Main content area */}
+      {/* Main content area - Responsive layout */}
       <div className={cn(
-        "flex flex-col",
+        "flex flex-col lg:flex-row",
         showTopNavigation && "pt-safe-area-top",
         showBottomNavigation && "pb-20 safe-area-bottom",
+        // Desktop: full height with proper spacing
+        "lg:min-h-screen lg:gap-0"
       )}>
         {/* Top Navigation */}
         {showTopNavigation && (
@@ -57,11 +59,16 @@ export function MobileLayout({
             showNotifications={showNotifications}
             notificationCount={notificationCount}
             user={user}
+            className="lg:hidden" // Hide mobile header on desktop
           />
         )}
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-hidden">
+        {/* Page Content - Desktop responsive */}
+        <main className={cn(
+          "flex-1 overflow-hidden",
+          // Desktop: proper width and spacing
+          "lg:flex-1 lg:overflow-auto lg:min-h-screen"
+        )}>
           <Suspense fallback={<MobileSkeletonLoader />}>
             {children}
           </Suspense>
@@ -139,8 +146,10 @@ export function MobileContent({
     <div className={cn(
       "min-h-screen px-4 sm:px-6 lg:px-8 py-4",
       "safe-area-top safe-area-bottom",
-      // Remove constraints on larger screens
-      "max-w-full lg:max-w-none",
+      // Desktop: remove constraints and ensure full width
+      "lg:max-w-none lg:w-full lg:min-h-screen",
+      // Ensure content is visible
+      "lg:overflow-visible",
       className
     )}>
       {children}

@@ -91,17 +91,16 @@ export async function getDashboardData({ userId, limit = 5 }: DashboardServiceOp
   ]);
 
   const { data: profile } = userResult;
-  const { data: assignments = [] } = assignmentsResult;
-  const { data: certificates = [] } = certificatesResult;
-  const { data: circulars = [] } = circularsResult;
-  const { data: acknowledgments = [] } = circularsAcknowledgmentResult;
-  const { data: tickets = [] } = ticketsResult;
-  const { data: checklist = [] } = checklistResult;
-
-  const activeAssignment = assignments[0] as Assignment | undefined;
+  const { data: assignments = [] } = assignmentsResult || {};
+  
+  // Ensure assignments is always an array
+  const safeAssignments = Array.isArray(assignments) ? assignments : [];
+  
+  const activeAssignment = safeAssignments[0] as Assignment | undefined;
 
   // Calculate dashboard stats
   const stats = calculateDashboardStats({
+    assignments: safeAssignments,
     certificates,
     circulars,
     acknowledgments,
