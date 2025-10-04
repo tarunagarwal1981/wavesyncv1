@@ -8,6 +8,7 @@ import { MobileOfflineIndicator } from './mobile-offline-indicator';
 import { useOnline } from '@/hooks/mobile/useOnline';
 import { useBreakpoint } from '@/hooks/mobile/useViewport';
 import { cn } from '@/lib/utils';
+import { ClientOnlyWrapper } from '@/components/providers/hydration-boundary';
 
 interface MobileLayoutProps {
   children: ReactNode;
@@ -73,23 +74,25 @@ export function MobileLayout({
       )}
 
       {/* Offline overlay */}
-      {isOffline && (
-        <div className="fixed inset-0 bg-background z-50">
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center space-y-4 p-6">
-              <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-muted-foreground" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 o 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 012 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">You're offline</h2>
-                <p className="text-muted-foreground">Some features may not be available</p>
+      <ClientOnlyWrapper>
+        {isOffline && (
+          <div className="fixed inset-0 bg-background z-50">
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center space-y-4 p-6">
+                <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-muted-foreground" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 012 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold">You're offline</h2>
+                  <p className="text-muted-foreground">Some features may not be available</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </ClientOnlyWrapper>
     </div>
   );
 }
@@ -134,8 +137,10 @@ export function MobileContent({
 }) {
   return (
     <div className={cn(
-      "min-h-screen px-4 py-4",
+      "min-h-screen px-4 sm:px-6 lg:px-8 py-4",
       "safe-area-top safe-area-bottom",
+      // Remove constraints on larger screens
+      "max-w-full lg:max-w-none",
       className
     )}>
       {children}

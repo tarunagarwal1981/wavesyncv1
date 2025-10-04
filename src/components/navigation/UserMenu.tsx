@@ -53,6 +53,7 @@ export function UserMenu({
       align="end" 
       className="w-56"
       alignOffset={5}
+      suppressHydrationWarning={true}
     >
       <DropdownMenuLabel className="font-normal">
         <div className="flex flex-col space-y-1">

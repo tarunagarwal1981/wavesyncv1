@@ -6,24 +6,38 @@ import { useOnline } from '@/hooks/mobile/useOnline';
 import { cn } from '@/lib/utils';
 
 export function MobileOfflineIndicator() {
+  const [mounted, setMounted] = useState(false);
   const { isOnline, wasOffline } = useOnline();
   const [showIndicator, setShowIndicator] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    if (wasOffline) {
-      setIsAnimating(true);
-      setShowIndicator(true);
-      
-      // Hide indicator after 3 seconds
-      const timer = setTimeout(() => {
-        setShowIndicator(false);
-        setTimeout(() => setIsAnimating(false), 300);
-      }, 3000);
+    setMounted(true);
+  }, []);
 
-      return () => clearTimeout(timer);
-    }
-  }, [wasOffline]);
+  useEffect(() => {
+    if (!mounted || !wasOffline) return;
+    
+    setIsAnimating(true);
+    setShowIndicator(true);
+    
+    // Hide indicator after 3 seconds
+    const timer = setTimeout(() => {
+      setShowIndicator(false);
+      setTimeout(() => setIsAnimating(false), 300);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [wasOffline, mounted]);
+
+  // Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="fixed top-4 right-4 z-50 pointer-events-none">
+        <div className="w-3 h-3 rounded-full border-2 border-background shadow-sm bg-gray-300" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -89,7 +103,21 @@ export function MiniOfflineIndicator({
 }: { 
   className?: string; 
 }) {
+  const [mounted, setMounted] = useState(false);
   const { isOnline } = useOnline();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className={cn("flex items-center gap-1 text-xs", className)}>
+        <div className="w-2 h-2 rounded-full bg-gray-300" />
+        <span className="text-muted-foreground">...</span>
+      </div>
+    );
+  }
 
   return (
     <div className={cn(

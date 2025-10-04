@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, CheckCircle2, RefreshCw } from 'lucide-react';
+import { AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 // Import dashboard components
 import { ActiveAssignmentCard } from '@/components/dashboard/ActiveAssignmentCard';
@@ -10,30 +10,15 @@ import { UpcomingItems } from '@/components/dashboard/UpcomingItems';
 import { RecentCirculars } from '@/components/dashboard/RecentCirculars';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { DashboardSkeleton } from '@/components/dashboard/SkeletonComponents';
+import { RefreshButton } from '@/components/dashboard/RefreshButton';
 
 // Import mobile components
 import { MobileLayout, MobileContent, MobileSection, MobileGrid } from '@/components/mobile';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 // Import data service
 import { getDashboardData } from '@/lib/dashboard-service';
 import { getUserWithProfile } from '@/lib/auth/session';
-
-// Refresh button component
-function RefreshButton() {
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={() => window.location.reload()}
-      className="gap-2"
-    >
-      <RefreshCw className="h-4 w-4" />
-      <span className="hidden sm:inline">Refresh</span>
-    </Button>
-  );
-}
 
 // Main Dashboard Content Component
 async function DashboardContent() {
@@ -76,46 +61,47 @@ async function DashboardContent() {
         }}
         notificationCount={stats.unreadNotifications}
       >
-        <MobileContent>
-          <div className="space-y-6">
-            {/* Welcome Header - Mobile Optimized */}
+        <MobileContent className="max-w-none">
+          <div className="space-y-6 max-w-7xl mx-auto px-4">
+            {/* Debug: Test visibility */}
+            <div className="bg-red-100 p-4 border border-red-300 rounded">
+              <h2 className="text-red-800 font-bold">Dashboard Loading Debug</h2>
+              <p className="text-red-700">If you can see this box, the dashboard container is working.</p>
+              <p className="text-red-700">Profile: {profile?.employee_id || 'No profile'}</p>
+              <p className="text-red-700">Stats: {JSON.stringify(stats, null, 2)}</p>
+            </div>
+            
+            {/* Test: Simple visible content */}
+            <div className="bg-green-100 p-4 border border-green-300 rounded">
+              <h2 className="text-green-800 font-bold">Test Content Visible</h2>
+              <p className="text-green-700">This should be visible after the debug box.</p>
+            </div>
+            
+            {/* Welcome Header - Responsive Layout */}
             <div className="space-y-4">
-              {/* Desktop version */}
-              <div className="hidden md:flex items-center justify-between">
-                <div>
-                  <h1 className="text-3xl font-bold tracking-tight">
+              {/* Responsive version */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
                     Welcome back, {profile.rank} {profile.full_name || 'Seafarer'}
                   </h1>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm sm:text-base text-muted-foreground mt-1">
                     Manage your maritime career and assignments
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-sm text-muted-foreground">
-                    Employee ID: <span className="font-mono font-medium">{profile.employee_id}</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    • {profile.nationality}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      Employee ID: <span className="font-mono font-medium">{profile.employee_id}</span>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      • {profile.nationality}
+                    </div>
                   </div>
                   <RefreshButton />
                 </div>
               </div>
 
-              {/* Mobile version */}
-              <div className="md:hidden space-y-3">
-                <div className="flex items-center justify-between">
-                  <h1 className="text-xl font-bold">
-                    Welcome back, {profile.rank}
-                  </h1>
-                  <RefreshButton />
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {profile.full_name || 'Seafarer'} • {profile.nationality}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  Employee ID: {profile.employee_id}
-                </div>
-              </div>
             </div>
 
             {/* Urgent Items Alert */}
@@ -132,23 +118,21 @@ async function DashboardContent() {
               </Alert>
             )}
             
-            {/* Active Assignment Hero Section */}
-            <MobileSection>
-              <ActiveAssignmentCard 
-                assignment={activeAssignment}
-                userRank={profile.rank}
-                userName={profile.full_name}
-                className="touch-card" // Mobile-optimized touch target
-              />
-            </MobileSection>
-
-            {/* Quick Stats Overview */}
-            <MobileSection title="Overview">
-              <QuickStatsGrid 
-                stats={stats} 
-                className="grid-cols-2 md:grid-cols-4 gap-3" // Mobile-first grid
-              />
-            </MobileSection>
+            {/* Test: Simplified content block */}
+            <div className="bg-blue-100 p-6 border border-blue-300 rounded">
+              <h2 className="text-xl font-bold text-blue-800 mb-4">Active Assignment</h2>
+              <p className="text-blue-700">No Active Assignment</p>
+              <p className="text-sm text-blue-600 mt-2">You don't have any active vessel assignments at the moment.</p>
+            </div>
+            
+            {/* Test: Stats block */}
+            <div className="bg-purple-100 p-6 border border-purple-300 rounded">
+              <h2 className="text-xl font-bold text-purple-800 mb-4">Quick Stats</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-purple-700">Pending Tasks: {stats.pendingTasks}</div>
+                <div className="text-purple-700">Certificates: {stats.expiringCertificates}</div>
+              </div>
+            </div>
 
             {/* Mobile-first Layout */}
             <div className="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-6">
@@ -169,10 +153,6 @@ async function DashboardContent() {
                 pendingTasks={stats.pendingTasks}
                 expiringCertificates={stats.expiringCertificates}
                 unreadCirculars={stats.unreadCirculars}
-                className="grid grid-cols-2 md:grid-cols-4 gap-3" // Mobile-responsive grid
-                onClick={(action) => {
-                  console.log(`Action clicked: ${action}`);
-                }}
               />
             </MobileSection>
             
