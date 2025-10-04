@@ -92,32 +92,42 @@ export async function getDashboardData({ userId, limit = 5 }: DashboardServiceOp
 
   const { data: profile } = userResult;
   const { data: assignments = [] } = assignmentsResult || {};
+  const { data: certificates = [] } = certificatesResult || {};
+  const { data: circulars = [] } = circularsResult || {};
+  const { data: acknowledgments = [] } = circularsAcknowledgmentResult || {};
+  const { data: tickets = [] } = ticketsResult || {};
+  const { data: checklist = [] } = checklistResult || {};
   
-  // Ensure assignments is always an array
+  // Ensure all data is always an array (handle null cases)
   const safeAssignments = Array.isArray(assignments) ? assignments : [];
+  const safeCertificates = Array.isArray(certificates) ? certificates : [];
+  const safeCirculars = Array.isArray(circulars) ? circulars : [];
+  const safeAcknowledgments = Array.isArray(acknowledgments) ? acknowledgments : [];
+  const safeTickets = Array.isArray(tickets) ? tickets : [];
+  const safeChecklist = Array.isArray(checklist) ? checklist : [];
   
   const activeAssignment = safeAssignments[0] as Assignment | undefined;
 
   // Calculate dashboard stats
   const stats = calculateDashboardStats({
     assignments: safeAssignments,
-    certificates,
-    circulars,
-    acknowledgments,
-    checklist,
-    tickets,
+    certificates: safeCertificates,
+    circulars: safeCirculars,
+    acknowledgments: safeAcknowledgments,
+    checklist: safeChecklist,
+    tickets: safeTickets,
   });
 
   // Generate upcoming items
   const upcomingItems = generateUpcomingItems({
     assignment: activeAssignment,
-    certificates,
-    tickets,
+    certificates: safeCertificates,
+    tickets: safeTickets,
   });
 
   // Combine circulars with read status
-  const recentCirculars = circulars.map(circular => {
-    const acknowledgment = acknowledgments.find(ack => ack.circular_id === circular.id);
+  const recentCirculars = safeCirculars.map(circular => {
+    const acknowledgment = safeAcknowledgments.find(ack => ack.circular_id === circular.id);
     return {
       ...circular,
       is_read: !!acknowledgment?.read_at,
@@ -141,8 +151,8 @@ export async function getDashboardData({ userId, limit = 5 }: DashboardServiceOp
     stats,
     upcomingItems,
     recentCirculars,
-    recentCertificates: certificates.slice(0, limit),
-    recentTickets: tickets.slice(0, limit),
+    recentCertificates: safeCertificates.slice(0, limit),
+    recentTickets: safeTickets.slice(0, limit),
   };
 }
 
